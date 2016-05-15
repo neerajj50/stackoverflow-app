@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Stackoverflow App</string>
+    <string name="action_search">Search</string>
+    <string name="all_questions">All Questions</string>enter_a_word
+    <string name="enter_a_word">All Answers</string>
+</resources>

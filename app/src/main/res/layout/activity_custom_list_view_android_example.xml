@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".AnswerActivity" >
+    <RelativeLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/blueback"
+        android:padding="10dp"
+        android:visibility="visible" >
+
+
+        <ImageView
+            android:id="@+id/backbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/arrowwhite"
+            />
+        <TextView
+            android:id="@+id/head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/backbutton"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:textStyle="normal"
+            android:textSize="18sp"
+            android:text=" All Answers"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/heading"
+        android:layout_below="@+id/RelativeLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:padding="5dp"
+        android:textSize="15sp"
+        />
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/heading"
+        android:background="#000000"/>
+    <ListView
+        android:id="@+id/list"
+        android:layout_below="@+id/view"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="2dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+</RelativeLayout>
