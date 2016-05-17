@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedStmt;
+import com.j256.ormlite.table.TableUtils;
 import com.ormlitedbmodel.ItemTableModel;
 import com.stackoverflowapp.R;
 import com.stackoverflowapp.fragments.MainFragment;
@@ -212,15 +214,40 @@ public class MainActivity extends AppCompatActivity {
     private void testOutOrmLiteDatabase(List<Item> itemList) throws SQLException {
         DatabaseHelper todoOpenDatabaseHelper = OpenHelperManager.getHelper(this,
                 DatabaseHelper.class);
-
+        DeleteAll();
         Dao<ItemTableModel, Long> todoDao = todoOpenDatabaseHelper.getDao();
-
         if(itemList != null)
         for(Item itemObj : itemList){
             ItemTableModel itemTableObj = new ItemTableModel();
             itemTableObj.getMappedItemTableObject(itemObj);
+
             todoDao.create(itemTableObj);
         }
+
+    }
+    //An method to delete data for offline so no duplicate get create.
+    private void DeleteAll() throws SQLException {
+        DatabaseHelper todoOpenDatabaseHelper = OpenHelperManager.getHelper(this,
+                DatabaseHelper.class);
+
+        Dao<ItemTableModel, Long> todoDao = todoOpenDatabaseHelper.getDao();
+
+
+
+        List<ItemTableModel> objList = todoDao.queryBuilder().distinct().query();
+        if(objList != null && objList.size() > 0){
+            List<Item> itemList = new ArrayList<Item>();
+            for(ItemTableModel item : objList){
+
+                todoDao.delete(item);
+
+            }
+
+        }else{
+            blockinternet();
+        }
+
+
     }
 //An method to get data for offline.
     private List<Example> getSearchDataFromDB() throws SQLException {
@@ -231,11 +258,14 @@ public class MainActivity extends AppCompatActivity {
         List<Example> postsList = new ArrayList<Example>();
         Example exmpleObj = new Example();
 
-        List<ItemTableModel> objList = todoDao.queryForAll();
+
+        List<ItemTableModel> objList = todoDao.queryBuilder().distinct().query();
         if(objList != null && objList.size() > 0){
             List<Item> itemList = new ArrayList<Item>();
             for(ItemTableModel item : objList){
-                itemList.add(item.getItemObject());
+                if(!itemList.contains(item.getItemObject())) {
+                    itemList.add(item.getItemObject());
+                }
             }
             exmpleObj.setItems(itemList);
         }else{
